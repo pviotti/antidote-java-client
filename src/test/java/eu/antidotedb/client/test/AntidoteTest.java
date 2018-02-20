@@ -41,6 +41,21 @@ public class AntidoteTest extends AbstractAntidoteTest {
         bucket.update(tx, orSetKey.add("yo"));
         tx.commitTransaction();
     }
+    
+    @Test(timeout = 10000)
+    public void boundedCounter() {
+//        BoundedCounterKey boundedCounter = Key.boundedCounter("testBCounter");
+//        AntidoteStaticTransaction tx = antidoteClient.createStaticTransaction();
+//        bucket.update(tx, boundedCounter.increment(3));
+//        tx.commitTransaction();
+        
+//        bucket.update(antidoteClient.noTransaction(),
+//                Key.boundedCounter("testBCounter").increment(3));
+        
+        Integer res = bucket.read(antidoteClient.noTransaction(), Key.boundedCounter("testBCounter"));
+        System.out.println("RES: " + res);
+
+    }
 
 
 //    @Test(timeout = 10000)
