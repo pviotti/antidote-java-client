@@ -25,7 +25,20 @@ public abstract class ResponseDecoder<Value> {
             }
         };
     }
-
+    
+    public static ResponseDecoder<Integer> bcounter() {
+        return new ResponseDecoder<Integer>() {
+            @Override
+            Integer readResponseToValue(AntidotePB.ApbReadObjectResp resp) {
+                if (resp == null) {
+                    return 0;
+                } else if (resp.getBcounter() == null) {
+                    throw new AntidoteException("Invalid response " + resp);
+                }
+                return resp.getBcounter().getValue();
+            }
+        };
+    }
 
     public static ResponseDecoder<Long> integer() {
         return new ResponseDecoder<Long>() {

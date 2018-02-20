@@ -94,6 +94,20 @@ public abstract class Key<Value> {
     public static CounterKey fatCounter(String key) {
         return fatCounter(ByteString.copyFromUtf8(key));
     }
+    
+    /**
+     * A bounded counter CRDT.
+     */
+    public static BoundedCounterKey boundedCounter(ByteString key) {
+        return new BoundedCounterKey(AntidotePB.CRDT_type.BCOUNTER, key);
+    }
+
+    /**
+     * A bounded counter CRDT.
+     */
+    public static BoundedCounterKey boundedCounter(String key) {
+        return boundedCounter(ByteString.copyFromUtf8(key));
+    }
 
     /**
      * An integer can be incremented and assigned to.
@@ -323,6 +337,8 @@ public abstract class Key<Value> {
                 return map_rr(k);
             case FATCOUNTER:
                 return fatCounter(k);
+            case BCOUNTER:
+                return boundedCounter(k);
             case POLICY:
                 throw new RuntimeException("policy CRDT not yet supported");
             default:
