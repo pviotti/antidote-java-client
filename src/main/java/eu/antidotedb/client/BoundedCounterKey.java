@@ -3,6 +3,8 @@ package eu.antidotedb.client;
 import com.google.protobuf.ByteString;
 import eu.antidotedb.antidotepb.AntidotePB;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.CheckReturnValue;
 
 public class BoundedCounterKey extends Key<Integer> {
@@ -25,6 +27,7 @@ public class BoundedCounterKey extends Key<Integer> {
     public UpdateOp increment(long inc) {
         AntidotePB.ApbBCounterUpdate.Builder bcounterUpdateInstruction = AntidotePB.ApbBCounterUpdate.newBuilder(); // The specific instruction in update instructions
         bcounterUpdateInstruction.setInc(inc); // Set increment
+        bcounterUpdateInstruction.setId(ByteString.copyFrom("myid", Charset.defaultCharset())); // TODO
         AntidotePB.ApbUpdateOperation.Builder updateOperation = AntidotePB.ApbUpdateOperation.newBuilder();
         updateOperation.setBcounterop(bcounterUpdateInstruction);
         return new UpdateOpDefaultImpl(this, updateOperation);
@@ -39,6 +42,7 @@ public class BoundedCounterKey extends Key<Integer> {
     public UpdateOp decrement(long dec) {
         AntidotePB.ApbBCounterUpdate.Builder bcounterUpdateInstruction = AntidotePB.ApbBCounterUpdate.newBuilder(); // The specific instruction in update instructions
         bcounterUpdateInstruction.setDec(dec); // Set decrement
+        bcounterUpdateInstruction.setId(ByteString.copyFrom("myid", Charset.defaultCharset())); // TODO
         AntidotePB.ApbUpdateOperation.Builder updateOperation = AntidotePB.ApbUpdateOperation.newBuilder();
         updateOperation.setBcounterop(bcounterUpdateInstruction);
         return new UpdateOpDefaultImpl(this, updateOperation);

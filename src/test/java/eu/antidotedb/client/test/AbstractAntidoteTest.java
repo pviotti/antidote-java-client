@@ -17,7 +17,7 @@ import java.util.List;
  * docker run --rm -p "8087:8087" antidotedb/antidote
  */
 public class AbstractAntidoteTest {
-    final static boolean debugLog = true;
+    final static boolean debugLog = false;
     final CountingTransformer messageCounter;
     final AntidoteClient antidoteClient;
     final Bucket bucket;
@@ -39,8 +39,7 @@ public class AbstractAntidoteTest {
 
         antidoteClient = new AntidoteClient(transformers, antidoteConfigManager.getConfigHosts());
 
-        //bucketKey = nextSessionId();
-        bucketKey = "mytest"; 
+        bucketKey = nextSessionId();
         bucket = Bucket.bucket(bucketKey);
     }
 

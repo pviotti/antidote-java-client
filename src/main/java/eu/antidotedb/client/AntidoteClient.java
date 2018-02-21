@@ -170,7 +170,8 @@ public class AntidoteClient {
         if (commitResponse.getSuccess()) {
             return new CommitInfo(commitResponse.getCommitTime());
         } else {
-            throw new AntidoteException("Failed to commit transaction (Error code: " + commitResponse.getErrorcode() + ")");
+            throw new AntidoteException("Failed to commit transaction (Error code: " + commitResponse.getErrorcode() + ")", 
+                    commitResponse.getErrorcode());
         }
 
 

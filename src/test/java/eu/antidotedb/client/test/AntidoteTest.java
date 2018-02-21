@@ -2,6 +2,8 @@ package eu.antidotedb.client.test;
 
 
 import eu.antidotedb.client.*;
+import eu.antidotedb.client.AntidoteException.ErrorCode;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 public class AntidoteTest extends AbstractAntidoteTest {
@@ -44,17 +47,26 @@ public class AntidoteTest extends AbstractAntidoteTest {
     
     @Test(timeout = 10000)
     public void boundedCounter() {
-//        BoundedCounterKey boundedCounter = Key.boundedCounter("testBCounter");
-//        AntidoteStaticTransaction tx = antidoteClient.createStaticTransaction();
-//        bucket.update(tx, boundedCounter.increment(3));
-//        tx.commitTransaction();
-        
-//        bucket.update(antidoteClient.noTransaction(),
-//                Key.boundedCounter("testBCounter").increment(3));
+        BoundedCounterKey boundedCounter = Key.boundedCounter("testBCounter");
+        AntidoteStaticTransaction tx = antidoteClient.createStaticTransaction();
+        bucket.update(tx, boundedCounter.increment(3));
+        bucket.update(tx, boundedCounter.increment(6));
+        bucket.update(tx, boundedCounter.decrement(2));
+        tx.commitTransaction();
         
         Integer res = bucket.read(antidoteClient.noTransaction(), Key.boundedCounter("testBCounter"));
-        System.out.println("RES: " + res);
-
+        assertEquals(7, res.intValue());
+        
+        try {
+            bucket.update(antidoteClient.noTransaction(),
+                  Key.boundedCounter("testBCounter").decrement(10));
+            fail();
+        } catch(AntidoteException ae) {
+            // should rise an exception with ErrorCode == BOUNDED_COUNTER
+            assertEquals(ErrorCode.BOUNDED_COUNTER, ae.getErrorCode());
+        } catch(Exception e) {
+            fail();
+        }
     }
 
 
