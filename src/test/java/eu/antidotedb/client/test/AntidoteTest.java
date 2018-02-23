@@ -62,10 +62,8 @@ public class AntidoteTest extends AbstractAntidoteTest {
                   Key.boundedCounter("testBCounter").decrement(10));
             fail();
         } catch(AntidoteException ae) {
-            // should rise an exception with ErrorCode == BOUNDED_COUNTER
-            assertEquals(ErrorCode.BOUNDED_COUNTER, ae.getErrorCode());
-        } catch(Exception e) {
-            fail();
+            // should raise an exception with ErrorCode == MISSING_TOKEN
+            assertEquals(ErrorCode.MISSING_TOKEN, ae.getErrorCode());
         }
     }
 

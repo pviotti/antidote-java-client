@@ -25,7 +25,7 @@ public class BoundedCounterKey extends Key<Integer> {
      */
     @CheckReturnValue
     public UpdateOp increment(long inc) {
-        AntidotePB.ApbBCounterUpdate.Builder bcounterUpdateInstruction = AntidotePB.ApbBCounterUpdate.newBuilder(); // The specific instruction in update instructions
+        AntidotePB.ApbBCounterUpdate.Builder bcounterUpdateInstruction = AntidotePB.ApbBCounterUpdate.newBuilder(); 
         bcounterUpdateInstruction.setInc(inc); // Set increment
         bcounterUpdateInstruction.setId(ByteString.copyFrom("myid", Charset.defaultCharset())); // TODO
         AntidotePB.ApbUpdateOperation.Builder updateOperation = AntidotePB.ApbUpdateOperation.newBuilder();
@@ -40,7 +40,7 @@ public class BoundedCounterKey extends Key<Integer> {
      */
     @CheckReturnValue
     public UpdateOp decrement(long dec) {
-        AntidotePB.ApbBCounterUpdate.Builder bcounterUpdateInstruction = AntidotePB.ApbBCounterUpdate.newBuilder(); // The specific instruction in update instructions
+        AntidotePB.ApbBCounterUpdate.Builder bcounterUpdateInstruction = AntidotePB.ApbBCounterUpdate.newBuilder();
         bcounterUpdateInstruction.setDec(dec); // Set decrement
         bcounterUpdateInstruction.setId(ByteString.copyFrom("myid", Charset.defaultCharset())); // TODO
         AntidotePB.ApbUpdateOperation.Builder updateOperation = AntidotePB.ApbUpdateOperation.newBuilder();

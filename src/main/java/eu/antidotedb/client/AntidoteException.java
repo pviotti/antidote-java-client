@@ -6,7 +6,15 @@ package eu.antidotedb.client;
 public class AntidoteException extends RuntimeException {
     
     public enum ErrorCode {
-        UNKNOWN(0), TIMEOUT(1), BOUNDED_COUNTER(2);
+        
+        /** Generic error */
+        UNKNOWN(0), 
+        
+        /** Timeout */
+        TIMEOUT(1), 
+        
+        /** Missing token to perform decrement operations on a bounded counter */
+        MISSING_TOKEN(2);
         
         private int code;
         
